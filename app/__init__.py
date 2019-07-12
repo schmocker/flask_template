@@ -1,8 +1,12 @@
-from flask import Flask, render_template
+from flask import Flask, url_for
+from flask_navigation import Navigation
 from flask_sqlalchemy import SQLAlchemy
 
+from .config import Config
+config = Config()
+
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+app.config.from_object(config)
 db = SQLAlchemy(app)
 
 
@@ -14,6 +18,15 @@ class User(db.Model):
     def __repr__(self):
         return '<User %r>' % self.username
 
-@app.route('/')
-def hello():
-    return render_template('main/home.html')
+
+from .routes import main_bp
+
+with app.app_context():
+    app.register_blueprint(main_bp)
+
+# navigation: https://flask-navigation.readthedocs.io
+nav = Navigation(app)
+nav.Bar('top', [
+    nav.Item('Home', 'main_bp.home'),
+    nav.Item('About', 'main_bp.about'),
+])

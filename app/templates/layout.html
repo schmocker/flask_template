@@ -1,4 +1,5 @@
 {% from "macros/navbar.html" import navbar with context %}
+{% from "macros/footer.html" import footer with context %}
 
 <!doctype html>
 <html lang="en">
@@ -11,28 +12,24 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename="css/style.css") }}">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
 
     <title>App{% block title %}{% endblock %}</title>
 </head>
-<body>
+<body class="d-flex flex-column">
 <header>
     {{ navbar() }}
 </header>
-
-<!-- Scroll to Top Button-->
-<a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-</a>
-
 
 <main class="container pt-3">
     {% block content %}{% endblock %}
 </main>
 
-
-<footer>
-
-</footer>
+{{ footer() }}
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
